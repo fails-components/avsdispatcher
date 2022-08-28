@@ -1,0 +1,54 @@
+{
+  "name": "avsdispatcher",
+  "version": "0.0.0",
+  "description": "Audio, Video, Screensharing dispatcher",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon -r dotenv/config src/server.js",
+    "test": "run-s test:lint",
+    "test:lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fails-components/avsdispatcher.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/eslint-parser": "^7.17.0",
+    "cmake-js": "^6.3.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.4.1"
+  },
+  "keywords": [
+    "audio",
+    "video",
+    "dispatching"
+  ],
+  "author": "Marten Richter",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/fails-components/avsdispatcher/issues"
+  },
+  "homepage": "https://github.com/fails-components/avsdispatcher#readme",
+  "dependencies": {
+    "@fails-components/config": "../config",
+    "@fails-components/security": "../security",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-jwt": "^7.7.5",
+    "mongodb": "^3.7.1",
+    "redis": "^4.0.6"
+  }
+}
