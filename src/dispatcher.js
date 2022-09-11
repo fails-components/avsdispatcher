@@ -162,6 +162,16 @@ export class AVSDispatcher {
       } else {
         return res.status(401).send('malformed request, spki')
       }
+      if (req.body.key) {
+        try {
+          toinsert.key = JSON.parse(req.body.key)
+        } catch (error) {
+          return res.status(401).send('malformed request, key json', error)
+        }
+      } else {
+        // console.log('malformes rquest debug', req.body)
+        return res.status(401).send('malformed request, key')
+      }
       const numCheck = (field) => {
         if (
           !(
@@ -185,13 +195,13 @@ export class AVSDispatcher {
       }
 
       const hashCheck = (field) => {
-        console.log('hash check field', field, req.body[field])
+        // console.log('hash check field', field, req.body[field])
         if (
           !(
             req.body[field] && // hashed values
             Array.isArray(req.body[field]) &&
             req.body[field].every(
-              (el) => typeof el === 'string' && el.match(/^[0-9a-zA-Z_+/=]+$/)
+              (el) => typeof el === 'string' && el.match(/^[0-9a-zA-Z_+:/=]+$/)
             )
           )
         )
@@ -219,7 +229,7 @@ export class AVSDispatcher {
         )
         const translateField = (field) => {
           if (hashtable.transHash && hashtable.transHash instanceof Object) {
-            console.log('translate field', field, toinsert[field], req.body)
+            // console.log('translate field', field, toinsert[field], req.body)
             toinsert[field] = toinsert[field]
               .map((el) =>
                 el.split(':').map((hash) => hashtable.transHash[hash])
@@ -244,7 +254,7 @@ export class AVSDispatcher {
       toinsert.region = req.token.region
       // TODO add region! at field region coming from authorization record
       try {
-        console.log('toinsert', toinsert)
+        // console.log('toinsert', toinsert)
         const upres = await routercol.updateOne(
           { url: toinsert.url },
           {
