@@ -21,7 +21,7 @@ import express from 'express'
 import MongoClient from 'mongodb'
 import { AVSDispatcher } from './dispatcher.js'
 import { FailsConfig } from '@fails-components/config'
-import { FailsJWTVerifier } from '@fails-components/security'
+import { FailsJWTVerifier, FailsJWTSigner } from '@fails-components/security'
 import cors from 'cors'
 import * as redis from 'redis'
 
@@ -46,10 +46,18 @@ const initServer = async () => {
 
   const avsverifier = new FailsJWTVerifier({ redis: redisclient, type: 'avs' })
 
+  const avssecurity = new FailsJWTSigner({
+    redis: redisclient,
+    type: 'avs',
+    expiresIn: '1m',
+    secret: cfg.getKeysSecret()
+  })
+
   const dispatcher = new AVSDispatcher({
     mongo: mongodb,
     redis: redisclient,
-    verifier: avsverifier
+    verifier: avsverifier,
+    signAvsJwt: avssecurity.signToken
   })
 
   const app = express()
