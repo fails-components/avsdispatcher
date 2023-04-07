@@ -43,8 +43,8 @@
   },
   "homepage": "https://github.com/fails-components/avsdispatcher#readme",
   "dependencies": {
-    "@fails-components/config": "../config",
-    "@fails-components/security": "../security",
+    "@fails-components/config": "^1.4.0",
+    "@fails-components/security": "^1.3.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "express-jwt": "^8.2.0",
