@@ -44,6 +44,8 @@ const initServer = async () => {
   })
   const mongodb = mongoclient.db(cfg.getMongoDB())
 
+  let ready = false
+
   const avsverifier = new FailsJWTVerifier({ redis: redisclient, type: 'avs' })
 
   const avssecurity = new FailsJWTSigner({
@@ -69,6 +71,16 @@ const initServer = async () => {
     app.use(cors())
   }
 
+  // Kubernetes livelyness and readyness probes
+  app.get('/ready', (req, res) => {
+    if (ready) return res.send('Ready')
+    else res.status(500).send('Not ready')
+  })
+
+  app.get('/health', async (req, res) => {
+    res.send('Healthy')
+  })
+
   app.use(cfg.getSPath('avsdispatcher'), dispatcher.express()) // secure all app routes
   dispatcher.installHandlers(cfg.getSPath('avsdispatcher'), app)
 
@@ -81,6 +93,7 @@ const initServer = async () => {
       ' host:',
       cfg.getHost()
     )
+    ready = true
   })
 }
 initServer()
