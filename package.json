@@ -1,6 +1,6 @@
 {
   "name": "@fails-components/avsdispatcher",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Audio, Video, Screensharing dispatcher",
   "main": "src/server.js",
   "type": "module",
