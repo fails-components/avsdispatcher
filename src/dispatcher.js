@@ -172,7 +172,7 @@ export class AVSDispatcher {
       try {
         toinsert.url = new URL(req.body.url).toString()
         toinsert.wsurl = new URL(req.body.wsurl).toString()
-      } catch (error) {
+      } catch /*( error) */ {
         // not a valid url
         return res.status(401).send('malformed request, url')
       }
